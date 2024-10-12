@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
+import com.yasserakbbach.composemaps.ui.accesslocation.AccessLocationRoute
 import com.yasserakbbach.composemaps.ui.theme.ComposeMapsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,8 +19,12 @@ class MainActivity : ComponentActivity() {
             false
         }
         setContent {
+            val navHostController = rememberNavController()
             ComposeMapsTheme {
-                ComposeMapsApp()
+                ComposeMapsApp(
+                    navController = navHostController,
+                    startDestination = AccessLocationRoute,
+                )
             }
         }
     }

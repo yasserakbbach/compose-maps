@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     kotlin("kapt")
     alias(libs.plugins.hilt.plugin)
+    id("kotlinx-serialization")
 }
 
 android {
@@ -74,6 +75,9 @@ dependencies {
 
     // Splash API
     implementation(libs.splash)
+
+    // Kotlin Serialization
+    implementation(libs.kotlin.serialization)
 }
 
 kapt {
