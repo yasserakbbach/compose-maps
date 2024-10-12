@@ -71,6 +71,9 @@ dependencies {
 
     // Coroutines
     implementation(libs.coroutines)
+
+    // Splash API
+    implementation(libs.splash)
 }
 
 kapt {
