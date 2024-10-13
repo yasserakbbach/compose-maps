@@ -78,6 +78,9 @@ dependencies {
 
     // Kotlin Serialization
     implementation(libs.kotlin.serialization)
+
+    // Play Services Location
+    implementation(libs.play.services.location)
 }
 
 kapt {
