@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.yasserakbbach.composemaps.ui.accesslocation.accessLocationScreen
+import com.yasserakbbach.composemaps.ui.maps.MapsRoute
 import com.yasserakbbach.composemaps.ui.maps.mapsScreen
 
 @Composable
@@ -19,7 +20,16 @@ fun ComposeMapsApp(
         navController = navController,
         startDestination = startDestination,
     ) {
-        accessLocationScreen()
+        accessLocationScreen(
+            navigateToMaps = { longLat ->
+                navController.navigate(
+                    MapsRoute(
+                        longitude = longLat.longitude,
+                        latitude = longLat.latitude,
+                    )
+                )
+            }
+        )
         mapsScreen()
     }
 }

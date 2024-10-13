@@ -14,7 +14,8 @@ navigationCompose = "2.8.2"
 coroutines = "1.7.3"
 splash = "1.0.1"
 kotlinSerialization = "1.7.1"
-playServicesLocation = "21.0.1"
+playServicesLocation = "21.3.0"
+mapsCompose = "4.3.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,7 @@ coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", vers
 splash = { module = "androidx.core:core-splashscreen", version.ref = "splash" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -19,6 +21,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Locate and load apikeys.properties
+        val mapsKeyFile = project.rootProject.file("apikeys.properties")
+        val properties = Properties()
+        properties.load(mapsKeyFile.inputStream())
+
+        // Fetch the map key
+        val googleMapsApiKey = properties.getProperty("GOOGLE_MAPS_API_KEY") ?: ""
+
+        // Inject the key dynamically into the manifest
+        manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = googleMapsApiKey
     }
 
     buildTypes {
@@ -81,6 +94,9 @@ dependencies {
 
     // Play Services Location
     implementation(libs.play.services.location)
+
+    // Maps Compose
+    implementation(libs.maps.compose)
 }
 
 kapt {
