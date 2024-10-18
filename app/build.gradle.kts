@@ -97,6 +97,9 @@ dependencies {
 
     // Maps Compose
     implementation(libs.maps.compose)
+
+    // Data Store
+    implementation(libs.data.store.preferences)
 }
 
 kapt {

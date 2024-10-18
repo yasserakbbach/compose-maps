@@ -16,15 +16,16 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun MapsScreen(state: MapsState) {
+    val position = remember { LatLng(state.latitude, state.longitude) }
+    val cameraPositionState = rememberCameraPositionState {
+        this.position = CameraPosition.fromLatLngZoom(position, 15f)
+    }
+
     Box(
         modifier = Modifier.fillMaxSize()
             .navigationBarsPadding(),
         contentAlignment = Alignment.Center,
     ) {
-        val position = remember { LatLng(state.latitude, state.longitude) }
-        val cameraPositionState = rememberCameraPositionState {
-            this.position = CameraPosition.fromLatLngZoom(position, 15f)
-        }
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,

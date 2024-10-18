@@ -3,6 +3,8 @@ package com.yasserakbbach.composemaps.ui.accesslocation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yasserakbbach.composemaps.domain.usecase.FetchCurrentLongLatUseCase
+import com.yasserakbbach.composemaps.domain.usecase.IncrementLocationPermissionRejectedCountUseCase
+import com.yasserakbbach.composemaps.domain.usecase.ShouldLocationPermissionRequestedFromSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AccessLocationViewModel @Inject constructor(
     private val fetchCurrentLongLatUseCase: FetchCurrentLongLatUseCase,
+    private val shouldLocationPermissionRequestedFromSettingsUseCase: ShouldLocationPermissionRequestedFromSettingsUseCase,
+    private val incrementLocationPermissionRejectedCountUseCase: IncrementLocationPermissionRejectedCountUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(AccessLocationState())
@@ -23,6 +27,10 @@ class AccessLocationViewModel @Inject constructor(
 
     private val _action = Channel<AccessLocationAction>(Channel.BUFFERED)
     val action = _action.receiveAsFlow()
+
+    init {
+        shouldRequestLocationPermissionFromSettings()
+    }
 
     fun onEvent(event: AccessLocationEvent) {
         when (event) {
@@ -33,9 +41,7 @@ class AccessLocationViewModel @Inject constructor(
     }
 
     private fun onOk() {
-        _state.update {
-            it.copy(loading = true)
-        }
+        toggleLoading(loading = true)
     }
 
     private fun onLocationPermissionGranted() {
@@ -46,6 +52,27 @@ class AccessLocationViewModel @Inject constructor(
     }
 
     private fun onLocationPermissionRejected() {
+        viewModelScope.launch {
+            incrementLocationPermissionRejectedCountUseCase()
+            toggleLoading(loading = false)
+            shouldRequestLocationPermissionFromSettings()
+        }
+    }
 
+    private fun shouldRequestLocationPermissionFromSettings() {
+        viewModelScope.launch {
+            val allowLocationPermissionFromSettings = shouldLocationPermissionRequestedFromSettingsUseCase().first()
+            _state.update {
+                it.copy(
+                    allowLocationPermissionFromSettings = allowLocationPermissionFromSettings,
+                )
+            }
+        }
+    }
+
+    private fun toggleLoading(loading: Boolean) {
+        _state.update {
+            it.copy(loading = loading)
+        }
     }
 }

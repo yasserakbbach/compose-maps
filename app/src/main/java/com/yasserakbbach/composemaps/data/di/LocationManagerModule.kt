@@ -9,7 +9,7 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @InstallIn(ViewModelComponent::class)
 @Module
-internal abstract class LocationManagerModule {
+abstract class LocationManagerModule {
 
     @Binds
     abstract fun bindLocationManager(locationManagerImpl: LocationManagerImpl): LocationManager

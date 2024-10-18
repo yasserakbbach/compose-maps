@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Compose Maps</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="please_allow_location_permission_description">To mark your location on the map, we need access to your location. Please allow location permission access.</string>
+    <string name="please_allow_location_from_settings">Please enable location access from your device settings to continue.</string>
 </resources>
